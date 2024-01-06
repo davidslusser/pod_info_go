@@ -5,7 +5,7 @@ FROM golang:1.19
 WORKDIR /app
 
 # Copy the Go application files into the container
-COPY main.go index.html ./
+COPY app/* ./
 
 # Build the Go application
 RUN go build main.go
