@@ -16,22 +16,16 @@ type PageVariables struct {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	// Retrieve the values of the HOSTNAME and IPADDR environment variables
-	pod_name := os.Getenv("HOSTNAME")
-	node_name := os.Getenv("NODE_NAME")
-	namespace := os.Getenv("POD_NAMESPACE")
-	ip_address := os.Getenv("POD_IP_ADDRESS")
-
-	// Create a PageVariables instance with the environment variable values
+	// Retrieve the values of the environment variables and store in PageVariables
 	pageVariables := PageVariables{
-		Podname:   pod_name,
-		Nodename:  node_name,
-		Namespace: namespace,
-		Ipaddress: ip_address,
+		Podname:   os.Getenv("HOSTNAME"),
+		Nodename:  os.Getenv("NODE_NAME"),
+		Namespace: os.Getenv("POD_NAMESPACE"),
+		Ipaddress: os.Getenv("POD_IP_ADDRESS"),
 	}
 
 	// Parse the HTML template
-	tmpl, err := template.ParseFiles("index.html")
+	tmpl, err := template.ParseFiles("templates/index.html")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
